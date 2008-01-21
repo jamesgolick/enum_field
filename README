@@ -1,13 +1,7 @@
 EnumField
 =========
 
-Introduction goes here.
+Macro to emulate a MySQL enum_field type thing.
 
 
-Example
-=======
-
-Example goes here.
-
-
-Copyright (c) 2008 [name of plugin creator], released under the MIT license
+Copyright (c) 2008 James Golick, released under the MIT license
