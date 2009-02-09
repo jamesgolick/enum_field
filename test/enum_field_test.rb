@@ -38,6 +38,17 @@ class EnumFieldTest < Test::Unit::TestCase
     end
   end
 
+  context "Specifying a message" do
+    setup do
+      @possible_values = %w(on off)
+      MockedModel.expects(:validates_inclusion_of).with(:status, :in => @possible_values, :message => "custom insult")
+    end
+
+    should "override the default message" do
+      MockedModel.send(:enum_field, :status, @possible_values, :message => 'custom insult')
+    end
+  end
+
   context "With an enum containing multiple word choices" do
     setup do
       MockedModel.expects(:validates_inclusion_of)

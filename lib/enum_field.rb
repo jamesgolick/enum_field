@@ -4,7 +4,8 @@ module EnumField
   end
   
   module ClassMethods
-    def enum_field(field, possible_values)
+    def enum_field(field, possible_values, options={})
+      message = options[:message] || "invalid #{field}"
       const_set field.to_s.pluralize.upcase, possible_values unless const_defined?(field.to_s.pluralize.upcase)
   
       possible_values.each do |current_value|
@@ -14,7 +15,7 @@ module EnumField
         end
       end
   
-      validates_inclusion_of field, :in => possible_values, :message => "invalid #{field}"
+      validates_inclusion_of field, :in => possible_values, :message => message
     end
   end
 end
