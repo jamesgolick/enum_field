@@ -8,7 +8,8 @@ module EnumField
       const_set field.to_s.pluralize.upcase, possible_values unless const_defined?(field.to_s.pluralize.upcase)
   
       possible_values.each do |current_value|
-        define_method("#{current_value}?") do
+        method_name = current_value.gsub(/[-\s]/, '_')
+        define_method("#{method_name}?") do
           self.send(field) == current_value
         end
       end

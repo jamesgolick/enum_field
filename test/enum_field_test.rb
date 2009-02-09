@@ -37,5 +37,21 @@ class EnumFieldTest < Test::Unit::TestCase
       assert ActiveRecord::Base.respond_to?(:enum_field)
     end
   end
+
+  context "With an enum containing multiple word choices" do
+    setup do
+      MockedModel.expects(:validates_inclusion_of)
+      MockedModel.send :enum_field, :field, ['choice one', 'choice-two', 'other']
+      @model = MockedModel.new
+    end
+
+    should "define an underscored query method for the multiple word choice" do
+      assert @model.respond_to?('choice_one?')
+    end
+
+    should "define an underscored query method for the dasherized choice" do
+      assert @model.respond_to?('choice_two?')
+    end
+  end
 end
 
