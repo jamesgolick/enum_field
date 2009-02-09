@@ -27,12 +27,10 @@ class EnumFieldTest < Test::Unit::TestCase
       
       model.stubs(:gender).returns("male")
       assert model.male?
+      assert !model.female?
       model.stubs(:gender).returns("female")
       assert !model.male?
-      
       assert model.female?
-      model.stubs(:gender).returns("male")
-      assert !model.female?
     end
     
     should "extend active record base with method" do
