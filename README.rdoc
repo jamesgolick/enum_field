@@ -11,7 +11,7 @@ few more goodies automatically. That's it!
       enum_field :status, ['on', 'off', 'standby', 'sleep', 'out of this world']
 
       # Optionally with a message to replace the default one
-      # enum_field :status, ['on', 'off', 'standby', 'sleep'], :message => "incorrect status"
+      # enum_field :status, ['on', 'off', 'standby', 'sleep', 'out of this world'], :message => "incorrect status"
 
       #...
     end
