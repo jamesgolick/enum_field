@@ -1,7 +1,32 @@
-EnumField
-=========
+= EnumField
 
 Macro to emulate a MySQL enum_field type thing.
 
+== Usage
+
+This plugin encapsulates a validates_inclusion_of and automatically gives you a 
+few more goodies automatically. That's it!
+
+    class Computer < ActiveRecord:Base
+      enum_field :status, ['on', 'off', 'standby', 'sleep', 'out of this world']
+
+      # Optionally with a message to replace the default 
+      # enum_field :status, ['on', 'off', 'standby', 'sleep'], :message => "incorrect status"
+
+      #...
+    end
+
+This will give you a few things:
+
+- add a validates_inclusion_of with a simple error message ("invalid #{field}") or your custom message
+- define the following query methods, in the name of expressive code:
+  - on?
+  - off?
+  - standby?
+  - sleep?
+  - out_of_this_world?
+- define the STATUSES constant, which contains the acceptable values
+
+= License
 
 Copyright (c) 2008 James Golick, released under the MIT license
