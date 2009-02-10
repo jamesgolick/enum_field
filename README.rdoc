@@ -10,7 +10,7 @@ few more goodies automatically. That's it!
     class Computer < ActiveRecord:Base
       enum_field :status, ['on', 'off', 'standby', 'sleep', 'out of this world']
 
-      # Optionally with a message to replace the default 
+      # Optionally with a message to replace the default one
       # enum_field :status, ['on', 'off', 'standby', 'sleep'], :message => "incorrect status"
 
       #...
