@@ -34,7 +34,7 @@ class EnumFieldTest < Test::Unit::TestCase
     end
     
     should "extend active record base with method" do
-      assert ActiveRecord::Base.respond_to?(:enum_field)
+      assert_respond_to ActiveRecord::Base, :enum_field
     end
   end
 
@@ -57,11 +57,27 @@ class EnumFieldTest < Test::Unit::TestCase
     end
 
     should "define an underscored query method for the multiple word choice" do
-      assert @model.respond_to?('choice_one?')
+      assert_respond_to @model, :choice_one?
     end
 
     should "define an underscored query method for the dasherized choice" do
-      assert @model.respond_to?('choice_two?')
+      assert_respond_to @model, :choice_two?
+    end
+  end
+
+  context "With an enum containing mixed case choices" do
+    setup do
+      MockedModel.stubs(:validates_inclusion_of)
+      MockedModel.send :enum_field, :field, ['Choice One', 'ChoiceTwo', 'Other']
+      @model = MockedModel.new
+    end
+
+    should "define a lowercase, underscored query method for the multiple word choice" do
+      assert_respond_to @model, :choice_one?
+    end
+
+    should "define a lowercase query method for the camelcase choice" do
+      assert_respond_to @model, :choicetwo?
     end
   end
 end
