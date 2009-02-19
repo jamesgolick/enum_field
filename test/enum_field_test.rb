@@ -51,7 +51,7 @@ class EnumFieldTest < Test::Unit::TestCase
 
   context "With an enum containing multiple word choices" do
     setup do
-      MockedModel.expects(:validates_inclusion_of)
+      MockedModel.stubs(:validates_inclusion_of)
       MockedModel.send :enum_field, :field, ['choice one', 'choice-two', 'other']
       @model = MockedModel.new
     end
@@ -78,6 +78,26 @@ class EnumFieldTest < Test::Unit::TestCase
 
     should "define a lowercase query method for the camelcase choice" do
       assert_respond_to @model, :choicetwo?
+    end
+  end
+
+  context "With an enum containing strange characters" do
+    setup do
+      MockedModel.stubs(:validates_inclusion_of)
+      MockedModel.send :enum_field, :field, ['choice%one', 'choice☺two', 'other.']
+      @model = MockedModel.new
+    end
+
+    should "define a normal query method for the unicode choice" do
+      assert_respond_to @model, :choice_two?
+    end
+
+    should "define a normal query method for the % choice" do
+      assert_respond_to @model, :choice_one?
+    end
+
+    should "define a query method without the trailing punctuation for the other choice" do
+      assert_respond_to @model, :other?
     end
   end
 end
